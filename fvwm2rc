@@ -1,0 +1,104 @@
+
+# .fvwm2rc Kristofer Hallin, 2008
+#
+
+SetEnv DIR Next 
+
+Style "*"           BorderWidth 3, HandleWidth 5
+Style "*"           Icon unknown.xpm, Color black/#969496
+Style "*"           MWMFunctions, MWMDecor, HintOverride, MWMBorder
+Style "*"           DecorateTransient, NoPPosition
+Style "*"           IconBox 220 15 -280 -1
+Style "*"           ClickToFocus
+Style "*"           RandomPlacement, SmartPlacement
+
+DeskTopSize 4x1
+EdgeResistance 250 50
+SnapAttraction 5 SameType
+
+DestroyFunc WindowListFunc
+AddToFunc WindowListFunc
++ I Iconify off
++ I FlipFocus
++ I Raise
+
+AddToFunc FocusRaiseAndStuff
++ I Iconify off
++ I Focus
++ I Raise
+
+AddToFunc SwitchWindow
++ I $[DIR] (CurrentPage, !Iconic, !Sticky) FocusRaiseAndStuff
++ I Deschedule 134000
++ I PipeRead `[ "$[DIR]" == "Prev" ] && \
+	echo 'SetEnv NDIR Next' || \
+	echo 'SetEnv NDIR Prev'`
++ I Schedule 700 134000 SetEnv DIR $[NDIR]
+
+AddToMenu "Quit-Verify" "Really Quit Fvwm?" Title
++	       "Yes, Really Quit" Quit
++	       "Restart Fvwm" Restart fvwm
++	       "Restart Fvwm2" Restart fvwm2
++	       "Start twm" Restart twm
++	       "No, Don't Quit" Nop
+
+AddToMenu "WindowOps" "Window Ops" Title
++	       "Move" Move
++	       "Resize" Resize
++	       "Raise" Raise
++	       "Lower" Lower
++	       "(De)Iconify" Iconify
++	       "(Un)Stick" Stick
++	       "(Un)Maximize" Maximize
++	       "(Un)Maximize Vertical" Maximize 0 100
++	       "" Nop
++	       "Destroy" Destroy
++	       "Delete" Delete
+
+AddToMenu "Utilities" "Utilities" Title
++	       "terminal" Exec exec xterm -title Terminal -fn 6x10 +sb -hb &
++	       "emacs" Exec exec emacs &
++              "firefox" Exec exec firefox &
++              "thunderbird" Exec exec thunderbird &
++              "pidgin" Exec exec pidgin &
++              "xpdf" Exec exec xpdf &
++              "Spotify" Exec exec wine .wine/drive_c/Program\ Files/Spotify/spotify.exe &
++              "gmm" Exec exec gmm &
++	       "" Nop
++	       "Refresh Screen" Refresh
++              "Restart fvwm2" Restart fvwm2
+
+AddToFunc "Move-or-Raise" "M" Move
++	       "M" Raise
++	       "C" Raise
++	       "D" RaiseLower
+
+AddToFunc "Move-or-Lower" "M" Move
++	       "M" Lower
++	       "C" Lower
++	       "D" RaiseLower
+
+AddToFunc "Resize-or-Raise" "M" Resize
++	       "M" Raise
++	       "C" Raise
++	       "D" RaiseLower
+
+Mouse 1         R       A       PopUp "Utilities"
+Mouse 2         R       A       PopUp "WindowOps"
+Mouse 3         R       A       WindowList
+
+Mouse 0 1       A       Close
+Mouse 0 2       A       Maximize 
+Mouse 0 4       A       Iconify
+
+Mouse 0 W	M	Move
+
+Key Left	A	C	Scroll -100 0
+Key Right	A	C	Scroll +100 +0
+Key Up		A	C	Scroll +0   -100
+Key Down	A	C	Scroll +0   +100
+Key Tab 	A 	C 	SwitchWindow
+Key x   	A 	M 	Exec xterm -fn 6x10 +sb -bg black -fg white &
+Key e   	A 	M 	Exec emacs &
+Key m   	A 	M 	Maximize 100 100
+Key s		A	M	WindowShade
