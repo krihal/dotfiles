@@ -106,26 +106,22 @@
        (global-set-key [mouse-5] 'up-slightly)))
 
 ;; Some nice colors
-(set-background-color "gray9")
-(set-foreground-color "white")
-(set-cursor-color "gray85")
-(set-border-color "gray9")
-(set-face-background 'modeline "gray9")
+(set-face-background 'modeline "gray10")
 (set-face-foreground 'modeline "white")
 
 (custom-set-faces
- '(default ((t (:inherit nil :stipple nil :background "gray9" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :foundry "unknown" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :stipple nil :background "gray10" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 84 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(font-lock-builtin-face ((t (:foreground "ivory3"))))
  '(font-lock-comment-face ((((class color)) (:foreground "LightCyan4"))))
  '(font-lock-constant-face ((t (:foreground "white"))))
  '(font-lock-function-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
- '(font-lock-keyword-face ((((class color)) (:foreground "LightSteelBlue3"))))
- '(font-lock-string-face ((((class color)) (:foreground "#7f9f7f"))))
+ '(font-lock-keyword-face ((((class color)) (:weight bold :foreground "LightSteelBlue3"))))
+ '(font-lock-string-face ((((class color)) (:foreground "orange"))))
  '(font-lock-type-face ((t (:foreground "LightSteelBlue3"))))
  '(font-lock-variable-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
  '(font-lock-warning-face ((t (:foreground "red3"))))
- '(fringe ((t (:foreground "goldenrod1" :background "gray9"))))
- '(region ((((class color)) (:foreground "gray15" :background "gainsboro"))))
+ '(fringe ((t (:foreground "goldenrod1" :background "gray10"))))
+ '(region ((((class color)) (:foreground "gray10" :background "gainsboro"))))
  '(show-paren-match ((t (:foreground "red"))))
  '(show-paren-match-face ((t (:foreground "red"))) t)
  '(show-paren-mismatch ((t (:foreground "red2"))))
@@ -159,6 +155,6 @@
 ;; Get rid of a lot of annoying crap
 (show-paren-mode t)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
-
