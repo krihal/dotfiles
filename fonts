@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+ 
+  <match target="font">
+    <!-- Enable anti-aliasing -->
+    <edit name="antialias" mode="assign">
+      <bool>true</bool>
+    </edit>
+  </match>
+
+  <match target="font">
+    <!-- Enable hinting -->
+    <edit name="hinting" mode="assign">
+      <bool>true</bool>
+    </edit>
+    <!-- Enable hinting -->
+    <edit name="autohint" mode="assign">
+      <bool>true</bool>
+    </edit>
+  </match>
+
+  <match target="font" >
+    <!-- Disable sub-pixel rendering. -->
+    <edit mode="assign" name="rgba" >
+      <const>none</const>
+    </edit>
+  </match>
+
+</fontconfig>
