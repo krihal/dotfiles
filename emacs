@@ -3,7 +3,7 @@
 ;;
 ;; Feel free to contact me at: kristofer.hallin@gmail.com
 
-;; Some nice hotkeys for frequently used stuff.
+;; Some nice hotkeys for frequently used stuff
 (global-set-key [f1] 'goto-line)
 (global-set-key [(shift f1)] 'save-buffer)
 (global-set-key [f2] 'other-window)
@@ -15,20 +15,22 @@
 (global-set-key [f4] 'delete-window)
 (global-set-key [(shift f4)] 'kill-buffer)
 
-(global-set-key [f5] 'compile)
-(global-set-key [f6] 'gdb)
+(global-set-key [f5] 'cvs-examine)
+(global-set-key [f6] 'cvs-update)
+(global-set-key [f7] 'indent-whole-buffer)
 
-;; Set font in Carbon Emacs
-;;(set-frame-font "-apple-courier new-medium-r-normal--0-0-0-0-m-0-iso10646-1")
+(global-set-key [f11] 'gdb)
+(global-set-key [f12] 'compile)
+(global-set-key [(shift f12)] 'compile-goto-error)
 
-;; No annoying messages at startup, thank you very much.
+;; No annoying messages at startup, thank you very much
 (setq inhibit-default-init t)
 (setq inhibit-startup-message t)
 
-;; Highlighting is good, though...
+;; Code highlighting
 (global-font-lock-mode t)
 
-;; Line and column numbering on.
+;; Line and column numbering on
 (setq column-number-mode t)
 (setq line-number-mode t)
 
@@ -58,17 +60,22 @@
 ;; Get rid of the fucked up menubar
 (if-gnu-emacs '(menu-bar-mode 0))
 
-;; Some c code formatting
+;; Some C code formatting
 (defun linux-c-mode ()
   "C mode"
+  (setq c-default-style "cc-mode") 
   (interactive)
   (c-mode)
   (c-set-style "K&R")
-  (setq tab-width 4)
+  (setq tab-width 8)
   (setq indent-tabs-mode t)
   (setq c-basic-offset 4))
 
-;; Some c code formatting
+;; Use C mode for .c and .h files
+(setq auto-mode-alist (cons '("/.*/.*\\.[ch]$" . linux-c-mode)
+			    auto-mode-alist))
+
+;; Some TCL code formatting
 (defun linux-tcl-mode ()
   "TCL mode"
   (interactive)
@@ -77,22 +84,18 @@
   (setq indent-tabs-mode t)
   (setq tcl-indent-level 8))
 
-(setq auto-mode-alist (cons '("/.*/.*\\.[ch]$" . linux-c-mode)
-			    auto-mode-alist))
-
-(setq auto-mode-alist (cons '("/.*/.*\\.java" . linux-c-mode)
-			    auto-mode-alist))
-
+;; Use TCL mode for .tcl files
 (setq auto-mode-alist (cons '("/.*/.*\\.tcl" . linux-tcl-mode)
 			    auto-mode-alist))
 
+;; Use TCP mode for .exp files
 (setq auto-mode-alist (cons '("/.*/.*\\.exp" . linux-tcl-mode)
 			    auto-mode-alist))
 
 ;; Swedish characters.
-;;(set-input-mode (car (current-input-mode))
-;;		(nth 1 (current-input-mode))
-;;              0)
+(set-input-mode (car (current-input-mode))
+		(nth 1 (current-input-mode))
+              0)
 
 ;; Enable the mouse-wheel
 (if-gnu-emacs
@@ -103,46 +106,36 @@
        (global-set-key [mouse-5] 'up-slightly)))
 
 ;; Some nice colors
-(set-background-color "lightyellow")
-(set-foreground-color "black")
-(set-cursor-color "black")
-(set-border-color "lightyellow")
-
-(set-face-background 'modeline "lightyellow")
-(set-face-foreground 'modeline "black")
-
-(custom-set-faces
- '(fringe ((t (:foreground "goldenrod1" :background "lightyellow")))))
+(set-background-color "gray9")
+(set-foreground-color "white")
+(set-cursor-color "gray85")
+(set-border-color "gray9")
+(set-face-background 'modeline "gray9")
+(set-face-foreground 'modeline "white")
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "gray9" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 99 :width normal :foundry "unknown" :family "Inconsolata"))))
  '(font-lock-builtin-face ((t (:foreground "ivory3"))))
  '(font-lock-comment-face ((((class color)) (:foreground "LightCyan4"))))
- '(font-lock-constant-face ((t (:foreground "gray60"))))
+ '(font-lock-constant-face ((t (:foreground "white"))))
  '(font-lock-function-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
  '(font-lock-keyword-face ((((class color)) (:foreground "LightSteelBlue3"))))
  '(font-lock-string-face ((((class color)) (:foreground "#7f9f7f"))))
  '(font-lock-type-face ((t (:foreground "LightSteelBlue3"))))
  '(font-lock-variable-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
  '(font-lock-warning-face ((t (:foreground "red3"))))
- '(fringe ((t (:foreground "goldenrod1" :background "lightyellow"))))
+ '(fringe ((t (:foreground "goldenrod1" :background "gray9"))))
  '(region ((((class color)) (:foreground "gray15" :background "gainsboro"))))
- '(show-paren-match-face ((t (:foreground "yellow"))) t)
+ '(show-paren-match ((t (:foreground "red"))))
+ '(show-paren-match-face ((t (:foreground "red"))) t)
+ '(show-paren-mismatch ((t (:foreground "red2"))))
  '(show-paren-mismatch-face ((t (:foreground "red2"))) t))
-
-;; Get rid of a lot of shit
-(show-paren-mode)
-(tool-bar-mode)
-(scroll-bar-mode)
 
 ;; Cycle buffers with Ctrl+N
 (global-set-key "\C-n" '(lambda () (interactive)
                           (switch-to-buffer (other-buffer))))
 
-;; Fix other peoples broken ideas of code indentation. B-]
+;; Fix other peoples broken ideas of code indentation
 (defun fix-broken-indentation ()
   (interactive)
   (save-excursion
@@ -150,24 +143,22 @@
     (while (re-search-forward "\\([)=]\\)[ \n\r\t]*{" nil t)
       (replace-match "\\1 {"))))
 
+;; Whole buffer indentation
 (defun indent-whole-buffer ()
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 
-(defun rra-cvs-update ()
-  "Customized cvs-update-other-window that doesn't prompt for a
-    directory."
+;; Close all buffers
+(defun close-all-buffers ()
   (interactive)
-  (if (string-match "XEmacs" emacs-version)
-      (progn
-	(if (one-window-p) (split-window-vertically))
-	(other-window 1)
-	(cvs-update (file-name-directory (buffer-file-name)) t))
-    (cvs-update-other-window (file-name-directory (buffer-file-name)))))
-(custom-set-variables
+  (mapc 'kill-buffer (buffer-list)))
 
- '(column-number-mode t)
- '(display-time-mode t)
- '(show-paren-mode t)
- '(transient-mark-mode t))
+(put 'downcase-region 'disabled nil)
+
+;; Get rid of a lot of annoying crap
+(show-paren-mode t)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode -1)
+
