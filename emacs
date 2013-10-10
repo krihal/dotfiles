@@ -6,7 +6,7 @@
 ;; Some nice hotkeys for frequently used stuff
 (global-set-key [f1] 'goto-line)
 (global-set-key [(shift f1)] 'save-buffer)
-(global-set-key [f2] 'other-window)
+(global-set-key [f2] 'cscope-find-this-symbol)
 (global-set-key [(shift f2)] 'switch-to-buffer)
 (global-set-key [(control f2)] 'switch-to-buffer)
 
@@ -67,7 +67,7 @@
   (interactive)
   (c-mode)
   (c-set-style "K&R")
-  (setq tab-width 8)
+  (setq tab-width 4)
   (setq indent-tabs-mode t)
   (setq c-basic-offset 4))
 
@@ -105,28 +105,6 @@
        (global-set-key [mouse-4] 'down-slightly)
        (global-set-key [mouse-5] 'up-slightly)))
 
-;; Some nice colors
-(set-face-background 'modeline "gray10")
-(set-face-foreground 'modeline "white")
-
-(custom-set-faces
- '(default ((t (:inherit nil :stipple nil :background "gray10" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 84 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
- '(font-lock-builtin-face ((t (:foreground "ivory3"))))
- '(font-lock-comment-face ((((class color)) (:foreground "LightCyan4"))))
- '(font-lock-constant-face ((t (:foreground "white"))))
- '(font-lock-function-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
- '(font-lock-keyword-face ((((class color)) (:weight bold :foreground "LightSteelBlue3"))))
- '(font-lock-string-face ((((class color)) (:foreground "orange"))))
- '(font-lock-type-face ((t (:foreground "LightSteelBlue3"))))
- '(font-lock-variable-name-face ((((class color)) (:foreground "LightSteelBlue3"))))
- '(font-lock-warning-face ((t (:foreground "red3"))))
- '(fringe ((t (:foreground "goldenrod1" :background "gray10"))))
- '(region ((((class color)) (:foreground "gray10" :background "gainsboro"))))
- '(show-paren-match ((t (:foreground "red"))))
- '(show-paren-match-face ((t (:foreground "red"))) t)
- '(show-paren-mismatch ((t (:foreground "red2"))))
- '(show-paren-mismatch-face ((t (:foreground "red2"))) t))
-
 ;; Cycle buffers with Ctrl+N
 (global-set-key "\C-n" '(lambda () (interactive)
                           (switch-to-buffer (other-buffer))))
@@ -156,5 +134,19 @@
 (show-paren-mode t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(display-battery-mode 1)
+
+;; Hilight the current line
+(require 'highlight-current-line)
+(highlight-current-line-on t)
+(set-face-background 'highlight-current-line-face "light yellow")
+
+;; Execute Python scripts in a better way
+(defun python-send-file ()
+  (interactive)
+  (save-buffer)
+  (python-send-string (concat "execfile('" (buffer-file-name) "')")))
+
+(eval-after-load "python" 
+  (define-key python-mode-map "\C-c\C-c" 'python-send-file))
