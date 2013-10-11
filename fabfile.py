@@ -3,21 +3,28 @@
 #
 
 from fabric.api import *
+from fabric.colors import blue
 from fabric.contrib.files import exists
 
-#
-# Install needed packages
-#
+def banner(fn):
+    def wrapped():
+        print(blue(fn.__doc__))
+        return fn()
+    return wrapped
+
+@banner
 def deploy_packages():
+    ''' Install needed packages '''
+
     sudo('apt-get update')
     sudo('apt-get install git')
     sudo('apt-get install emacs23-nox')
     sudo('apt-get install snmpd')
 
-#
-# Install configuration
-#
+@banner
 def deploy_dotfiles():
+    ''' Install configuration '''
+
     git_url = 'http://github.com/krihal/dotfiles.git'
 
     with cd('~/'):
@@ -32,25 +39,23 @@ def deploy_dotfiles():
         if exists('/etc/snmp'):
             run('sudo cp snmpd.conf /etc/snmp/snmpd.conf')
 
-#
-# Start services
-#
+@banner
 def services_start():
+    ''' Start services '''
     services = {'snmpd'}
 
     for service in services:
         sudo("service %s restart" % service)
 
-#
-# Verify services
-#
+@banner
 def services_verify():
+    ''' Verify services '''
     local("snmpget -v1 -c public %s iso.3.6.1.2.1.4.24.6.0" % env.host)
 
-#
-# Set system parameters
-#
+@banner
 def parameters_set():
+    ''' Set system parameters '''
+
     pass
 
 #
