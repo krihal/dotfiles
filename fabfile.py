@@ -35,16 +35,22 @@ def deploy_dotfiles():
 #
 # Start services
 #
-def start_services():
+def services_start():
     services = {'snmpd'}
 
     for service in services:
         sudo("service %s restart" % service)
 
 #
+# Verify services
+#
+def services_verify():
+    local("snmpget -v1 -c public %s iso.3.6.1.2.1.4.24.6.0" % env.host)
+
+#
 # Set system parameters
 #
-def set_parameters():
+def parameters_set():
     pass
 
 #
@@ -53,5 +59,9 @@ def set_parameters():
 def run_all():
     deploy_packages()
     deploy_dotfiles()
-    start_services()
-    set_parameters()
+    services_start()
+    services_verify()
+    parameters_set()
+
+if __name__ == '__main__':
+    run_all()
