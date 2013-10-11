@@ -40,3 +40,18 @@ def start_services():
 
     for service in services:
         sudo("service %s restart" % service)
+
+#
+# Set system parameters
+#
+def set_parameters():
+    pass
+
+#
+# Run all 
+#
+def run_all():
+    deploy_packages()
+    deploy_dotfiles()
+    start_services()
+    set_parameters()
