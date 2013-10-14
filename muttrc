@@ -1,0 +1,26 @@
+set imap_user = "kristofer.hallin@gmail.com"
+set smtp_url = "smtp://kristofer.hallin@gmail.com@smtp.gmail.com:587/"
+set from = "kristofer.hallin@gmail.com"
+set realname = "Kristofer Hallin"
+set editor = "emacs"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set imap_check_subscribed
+set hostname = gmail.com
+set mail_check = 120
+set timeout = 300
+set imap_keepalive = 300
+set postponed = "+[Gmail]/Drafts"
+set record = "+[Gmail]/Sent Mail"
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set move = no
+set include
+set sort = 'threads'
+set auto_tag = yes
+hdr_order Date From To Cc
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop
