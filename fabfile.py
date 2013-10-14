@@ -7,24 +7,20 @@ from fabric.colors import blue
 from fabric.contrib.files import exists
 
 def banner(fn):
-    def wrapped():
-        print(blue(fn.__doc__))
-        return fn()
-    return wrapped
+    print(blue(fn.__doc__))
+    return fn()
 
 @banner
 def deploy_packages():
     ''' Install needed packages '''
-
     sudo('apt-get update')
-    sudo('apt-get install git')
-    sudo('apt-get install emacs23-nox')
-    sudo('apt-get install snmpd')
+    sudo('apt-get install -y git')
+    sudo('apt-get install -y emacs23-nox')
+    sudo('apt-get install -y snmpd')
 
 @banner
 def deploy_dotfiles():
     ''' Install configuration '''
-
     git_url = 'http://github.com/krihal/dotfiles.git'
 
     with cd('~/'):
@@ -55,7 +51,6 @@ def services_verify():
 @banner
 def parameters_set():
     ''' Set system parameters '''
-
     pass
 
 #
