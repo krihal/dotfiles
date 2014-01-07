@@ -1,5 +1,4 @@
 ;; This is the .emacs file for Kristofer Hallin.
-;; Using Linus Torvalds codingstyle.
 ;;
 ;; Feel free to contact me at: kristofer.hallin@gmail.com
 
@@ -15,15 +14,13 @@
 (global-set-key [f4] 'delete-window)
 (global-set-key [(shift f4)] 'kill-buffer)
 
-(global-set-key [f5] 'cvs-examine)
-(global-set-key [f6] 'cvs-update)
 (global-set-key [f7] 'indent-whole-buffer)
 
 (global-set-key [f11] 'gdb)
 (global-set-key [f12] 'compile)
 (global-set-key [(shift f12)] 'compile-goto-error)
 
-;; No annoying messages at startup, thank you very much
+;; No annoying messages at startup
 (setq inhibit-default-init t)
 (setq inhibit-startup-message t)
 
@@ -37,10 +34,10 @@
 ;; Make all "yes or no" prompts show "y or n" instead
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; Stop creating annoying backups
+;; Stop creating backups
 (setq make-backup-files nil)
 
-;; Version shit
+;; Version stuff
 (defun if-gnu-emacs (expr)
   (if (string-match "GNU" (emacs-version))
                 (eval expr)))
@@ -57,19 +54,16 @@
 (delete-selection-mode t)
 (display-time)
 
-;; Get rid of the fucked up menubar
-(if-gnu-emacs '(menu-bar-mode 0))
-
-;; Some C code formatting
+;; C code formatting
 (defun linux-c-mode ()
   "C mode"
   (setq c-default-style "cc-mode") 
   (interactive)
   (c-mode)
   (c-set-style "K&R")
-  (setq tab-width 4)
+  (setq tab-width 8)
   (setq indent-tabs-mode t)
-  (setq c-basic-offset 4))
+  (setq c-basic-offset 8))
 
 ;; Use C mode for .c and .h files
 (setq auto-mode-alist (cons '("/.*/.*\\.[ch]$" . linux-c-mode)
@@ -88,7 +82,7 @@
 (setq auto-mode-alist (cons '("/.*/.*\\.tcl" . linux-tcl-mode)
 			    auto-mode-alist))
 
-;; Use TCP mode for .exp files
+;; Use TCL mode for .exp files
 (setq auto-mode-alist (cons '("/.*/.*\\.exp" . linux-tcl-mode)
 			    auto-mode-alist))
 
@@ -142,11 +136,8 @@
 (highlight-current-line-on t)
 (set-face-background 'highlight-current-line-face "light yellow")
 
-;; Execute Python scripts in a better way
-(defun python-send-file ()
-  (interactive)
-  (save-buffer)
-  (python-send-string (concat "execfile('" (buffer-file-name) "')")))
-
-(eval-after-load "python" 
-  (define-key python-mode-map "\C-c\C-c" 'python-send-file))
+;; Auto complete
+(add-to-list 'load-path "/home/khn/.emacs.d/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "/home/khn/.emacs.d//ac-dict")
+(ac-config-default)
