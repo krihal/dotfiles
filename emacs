@@ -48,10 +48,6 @@
   (setq indent-tabs-mode t)
   (setq c-basic-offset 8))
 
-;; Use C mode for .c and .h files
-(setq auto-mode-alist (cons '("/.*/.*\\.[ch]$" . linux-c-mode)
-			    auto-mode-alist))
-
 ;; Some TCL code formatting
 (defun linux-tcl-mode ()
   "TCL mode"
@@ -61,13 +57,12 @@
   (setq indent-tabs-mode t)
   (setq tcl-indent-level 8))
 
-;; Use TCL mode for .tcl files
-(setq auto-mode-alist (cons '("/.*/.*\\.tcl" . linux-tcl-mode)
-			    auto-mode-alist))
-
-;; Use TCL mode for .exp files
-(setq auto-mode-alist (cons '("/.*/.*\\.exp" . linux-tcl-mode)
-			    auto-mode-alist))
+;; Erlang
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/erlang/")
+(require 'erlang-start)
+(setq erlang-root-dir "/usr/lib/erlang")
+(add-to-list 'exec-path "/usr/lib/erlang/bin")
+(setq erlang-man-root-dir "/usr/lib/erlang/man")
 
 ;; Fix other peoples broken ideas of code indentation
 (defun fix-broken-indentation ()
@@ -93,3 +88,10 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories "/home/khn/.emacs.d//ac-dict")
 (ac-config-default)
+
+;; Bind modes to file endings
+(setq auto-mode-alist (cons '("/.*/.*\\.[ch]$" . linux-c-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("/.*/.*\\.tcl" . linux-tcl-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("/.*/.*\\.exp" . linux-tcl-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.erl?$" . erlang-mode))
+(add-to-list 'auto-mode-alist '("\\.hrl?$" . erlang-mode))
