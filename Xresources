@@ -1,6 +1,0 @@
-URxvt.perl-ext-common: default,matcher
-URxvt.url-launcher: /usr/bin/xdg-open
-URxvt.matcher.button: 1
-URxvt.font:     xft:bitstream vera sans mono:size=12:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=12:antialias=true
-URxvt.scrollBar: false
